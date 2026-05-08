@@ -6,449 +6,657 @@
   <title>Where Shall We Go? ♥</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #FAF8F3;
-      --gold:       #B8935A;
-      --gold-light: #E2C99A;
-      --rose:       #B87A7F;
-      --dark:       #28211C;
-      --text:       #4E453E;
-      --muted:      #9A8E85;
-      --card-bg:    #D8D0C5;
+      --sand:    #EAE3D6;
+      --sand-2:  #DDD6C8;
+      --sand-3:  #D3CBBC;
+      --ink:     #1A120A;
+      --ink-2:   #574A42;
+      --ink-3:   #9A8C84;
+      --rust:    #8B3322;
+      --burg:    #3E1C1A;
+      --burg-dk: #27100D;
+      --gold:    #B8935A;
+      --gold-lt: #E2C99A;
+      --border:  rgba(30,20,10,0.13);
     }
 
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--bg);
-      color: var(--dark);
-      font-family: 'Lato', sans-serif;
+      background: var(--sand);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
       font-weight: 300;
+      -webkit-font-smoothing: antialiased;
       min-height: 100vh;
     }
+    .hidden { display: none !important; }
 
-    /* ── Header ── */
-    header {
+    /* ═══════════════════════ GRID VIEW ═══════════════════════ */
+
+    .grid-header {
       text-align: center;
-      padding: 88px 24px 72px;
+      padding: 84px 24px 60px;
     }
-
-    .header-ornament {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-bottom: 30px;
+    .ornament {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      margin-bottom: 26px;
     }
-
-    .header-ornament span {
-      display: block;
-      width: 48px;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.7;
+    .ornament span { display: block; width: 44px; height: 1px; background: var(--gold); opacity: .65; }
+    .ornament svg  { width: 13px; height: 13px; fill: var(--gold); opacity: .8; }
+    .grid-sup  {
+      font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px;
     }
-
-    .header-ornament svg {
-      width: 14px;
-      height: 14px;
-      fill: var(--rose);
-    }
-
-    .tagline {
-      font-size: 10px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-      font-weight: 400;
-    }
-
-    h1 {
+    .grid-h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.8rem, 7vw, 5rem);
-      font-weight: 400;
-      line-height: 1.1;
-      color: var(--dark);
-      margin-bottom: 22px;
+      font-size: clamp(2.8rem, 7vw, 4.6rem);
+      font-weight: 700; line-height: 1.1; color: var(--ink); margin-bottom: 18px;
+    }
+    .grid-h1 em { font-style: italic; color: var(--gold); }
+    .grid-sub {
+      font-size: 14px; color: var(--ink-3); letter-spacing: .3px;
+      line-height: 1.85; max-width: 300px; margin: 0 auto;
     }
 
-    h1 em {
-      font-style: italic;
-      color: var(--rose);
+    .dest-grid {
+      max-width: 1120px; margin: 0 auto;
+      padding: 28px 20px 80px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
     }
 
-    .subtitle {
-      font-size: 14px;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-      max-width: 340px;
-      margin: 0 auto;
-      line-height: 1.9;
+    .dest-card {
+      position: relative; border-radius: 3px; overflow: hidden;
+      cursor: pointer; aspect-ratio: 3/4; background: var(--sand-2);
+      opacity: 0; animation: fadeUp .52s ease forwards;
     }
+    .dest-card:nth-child(1){animation-delay:.04s} .dest-card:nth-child(2){animation-delay:.08s}
+    .dest-card:nth-child(3){animation-delay:.12s} .dest-card:nth-child(4){animation-delay:.16s}
+    .dest-card:nth-child(5){animation-delay:.20s} .dest-card:nth-child(6){animation-delay:.24s}
+    .dest-card:nth-child(7){animation-delay:.28s} .dest-card:nth-child(8){animation-delay:.32s}
+    .dest-card:nth-child(9){animation-delay:.36s}
 
-    /* ── Grid ── */
-    .grid {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 40px 20px 100px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+    .dest-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .65s cubic-bezier(.33,1,.68,1);
     }
+    .dest-card:hover img, .dest-card:focus-within img { transform: scale(1.065); }
 
-    @media (max-width: 860px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
+    .dest-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 38%, rgba(14,8,3,.72) 100%);
+      transition: background .35s ease;
     }
-
-    @media (max-width: 520px) {
-      .grid {
-        grid-template-columns: 1fr;
-        padding: 24px 16px 80px;
-        gap: 14px;
-      }
-      h1 { font-size: 2.6rem; }
+    .dest-card:hover .dest-overlay {
+      background: linear-gradient(to bottom, rgba(14,8,3,.08) 0%, rgba(14,8,3,.86) 100%);
     }
-
-    /* ── Cards ── */
-    .card {
-      position: relative;
-      border-radius: 3px;
-      overflow: hidden;
-      cursor: pointer;
-      aspect-ratio: 3 / 4;
-      background: var(--card-bg);
-      opacity: 0;
-      animation: fadeUp 0.55s ease forwards;
+    .dest-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 22px 20px 20px; }
+    .dest-country {
+      font-size: 9px; letter-spacing: 3.5px; text-transform: uppercase;
+      color: rgba(255,255,255,.6); margin-bottom: 5px;
     }
-
-    .card:nth-child(1) { animation-delay: 0.05s; }
-    .card:nth-child(2) { animation-delay: 0.10s; }
-    .card:nth-child(3) { animation-delay: 0.15s; }
-    .card:nth-child(4) { animation-delay: 0.20s; }
-    .card:nth-child(5) { animation-delay: 0.25s; }
-    .card:nth-child(6) { animation-delay: 0.30s; }
-    .card:nth-child(7) { animation-delay: 0.35s; }
-    .card:nth-child(8) { animation-delay: 0.40s; }
-    .card:nth-child(9) { animation-delay: 0.45s; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.7s cubic-bezier(0.33, 1, 0.68, 1);
-    }
-
-    .card:hover img,
-    .card:focus-within img {
-      transform: scale(1.07);
-    }
-
-    .card-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        transparent 35%,
-        rgba(18, 12, 8, 0.74) 100%
-      );
-      transition: background 0.4s ease;
-    }
-
-    .card:hover .card-overlay,
-    .card:focus-within .card-overlay {
-      background: linear-gradient(
-        to bottom,
-        rgba(18, 12, 8, 0.10) 0%,
-        rgba(18, 12, 8, 0.88) 100%
-      );
-    }
-
-    .card-content {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 26px 22px 24px;
-    }
-
-    .card-country {
-      font-size: 10px;
-      letter-spacing: 3.5px;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.6);
-      margin-bottom: 5px;
-    }
-
-    .card-name {
+    .dest-name {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: white;
-      line-height: 1.2;
-      margin-bottom: 16px;
+      font-size: 1.45rem; font-weight: 700; color: white; line-height: 1.1;
     }
 
-    .card-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 20px;
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      color: white;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      background: transparent;
-      cursor: pointer;
-      transition: background 0.25s ease, border-color 0.25s ease, opacity 0.3s ease, transform 0.3s ease;
-      font-family: 'Lato', sans-serif;
-      font-weight: 400;
-      opacity: 0;
-      transform: translateY(6px);
+    /* ═══════════════════════ DETAIL VIEW ═══════════════════════ */
+
+    #view-detail { background: var(--sand); min-height: 100vh; }
+
+    .back-btn {
+      position: fixed; top: 18px; left: 20px; z-index: 100;
+      background: rgba(234,227,214,.88); backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: none; cursor: pointer; padding: 8px 14px; border-radius: 2px;
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase; color: var(--ink-2);
+      transition: color .2s;
+    }
+    .back-btn:hover { color: var(--ink); }
+
+    .detail-hero {
+      width: 100%; height: 62vh; min-height: 340px;
+      overflow: hidden; position: relative;
+    }
+    .detail-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-fade {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(234,227,214,.5) 100%);
     }
 
-    .card:hover .card-btn,
-    .card:focus-within .card-btn {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.04s;
+    .wrap { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+
+    /* Intro section */
+    .intro-sec  { padding: 36px 0 28px; }
+    .tags       { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tag {
+      font-size: 9px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 5px 11px; border: 1px solid var(--border); border-radius: 20px;
+      color: var(--ink-2); background: rgba(255,255,255,.4);
+    }
+    .vibe-lbl {
+      font-size: 10px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--rust); margin-bottom: 12px;
+    }
+    .big-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.3rem, 6.5vw, 3.8rem);
+      font-weight: 900; line-height: 1.07; color: var(--ink); margin-bottom: 20px;
+    }
+    .detail-desc {
+      font-size: 15px; line-height: 1.78; color: var(--ink-2); margin-bottom: 26px;
+    }
+    .why-box {
+      background: rgba(255,255,255,.45); border: 1px solid var(--border);
+      border-radius: 8px; padding: 18px 22px;
+    }
+    .why-lbl {
+      font-size: 9px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 8px;
+    }
+    .why-text { font-size: 14px; line-height: 1.78; color: var(--ink-2); }
+
+    /* Itinerary section */
+    .itin-sec { padding: 44px 0; }
+    .sec-sup  {
+      font-size: 9px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 10px;
+    }
+    .sec-h2   {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 5vw, 2.9rem);
+      font-weight: 700; line-height: 1.14; color: var(--ink); margin-bottom: 22px;
+    }
+    .day-card { background: var(--sand-2); border-radius: 6px; padding: 17px 20px; margin-bottom: 10px; }
+    .day-lbl  {
+      font-size: 9px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 7px;
+    }
+    .day-text { font-size: 14px; line-height: 1.72; color: var(--ink-2); }
+
+    /* Recs section */
+    .recs-sec  { padding: 44px 0; }
+    .recs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .rec-card  { background: var(--sand-2); border-radius: 6px; padding: 16px 18px 15px; }
+    .rec-lbl   {
+      font-size: 9px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 7px;
+    }
+    .rec-name  { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 5px; }
+    .rec-desc  { font-size: 12px; color: var(--ink-2); line-height: 1.55; }
+
+    /* Wear section */
+    .wear-sec  { padding: 44px 0 52px; }
+    .wear-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4.5vw, 2.3rem);
+      font-style: italic; font-weight: 400;
+      color: var(--ink); line-height: 1.48;
     }
 
-    .card-btn:hover,
-    .card-btn:focus {
-      background: rgba(255, 255, 255, 0.18);
-      border-color: white;
-      outline: none;
+    /* CTA section */
+    .cta-sec {
+      padding: 56px 0 52px;
+      background: linear-gradient(160deg, var(--burg) 0%, var(--burg-dk) 100%);
     }
+    .cta-sup {
+      font-size: 9px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(255,255,255,.45); margin-bottom: 14px;
+    }
+    .cta-h {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 5.5vw, 3.2rem);
+      font-weight: 700; line-height: 1.14; color: white; margin-bottom: 34px;
+    }
+    .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 12px 26px; background: white; color: var(--burg);
+      border: none; cursor: pointer; border-radius: 2px;
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase; transition: opacity .2s;
+    }
+    .btn-primary:hover { opacity: .85; }
+    .btn-secondary {
+      padding: 12px 26px; background: transparent; color: white;
+      border: 1px solid rgba(255,255,255,.45); cursor: pointer; border-radius: 2px;
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase; transition: border-color .2s;
+    }
+    .btn-secondary:hover { border-color: white; }
 
-    /* ── Modal ── */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(22, 16, 12, 0.90);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-    }
+    /* ═══════════════════════ MODAL ═══════════════════════ */
 
-    .modal-backdrop.open {
-      opacity: 1;
-      pointer-events: auto;
+    .modal-back {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(20,12,7,.92); backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      display: flex; align-items: center; justify-content: center; padding: 24px;
+      opacity: 0; pointer-events: none; transition: opacity .4s ease;
     }
+    .modal-back.open { opacity: 1; pointer-events: auto; }
 
-    .modal {
-      background: var(--bg);
-      max-width: 460px;
-      width: 100%;
-      padding: 60px 44px 56px;
-      text-align: center;
-      position: relative;
-      transform: translateY(28px) scale(0.97);
-      transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+    .modal-box {
+      background: var(--sand); max-width: 440px; width: 100%;
+      padding: 56px 40px 52px; text-align: center; position: relative;
+      transform: translateY(22px) scale(.97);
+      transition: transform .5s cubic-bezier(.34,1.4,.64,1);
     }
+    .modal-back.open .modal-box { transform: none; }
 
-    .modal-backdrop.open .modal {
-      transform: translateY(0) scale(1);
+    .modal-x {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; cursor: pointer;
+      font-size: 16px; color: var(--ink-3); padding: 6px 8px; transition: color .2s;
     }
-
-    .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 18px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1;
-      padding: 6px 8px;
-      transition: color 0.2s;
-    }
-
-    .modal-close:hover,
-    .modal-close:focus {
-      color: var(--dark);
-      outline: none;
-    }
+    .modal-x:hover { color: var(--ink); }
 
     .modal-heart {
-      display: block;
-      font-size: 2rem;
-      color: var(--rose);
-      margin-bottom: 22px;
-      animation: heartbeat 1.4s ease infinite;
+      display: block; font-size: 1.9rem; color: var(--gold); margin-bottom: 20px;
+      animation: pulse 1.4s ease infinite;
     }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 28%{transform:scale(1.18)} 55%{transform:scale(1.06)} }
 
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      28%       { transform: scale(1.18); }
-      55%       { transform: scale(1.06); }
+    .modal-lbl {
+      font-size: 9px; font-weight: 500; letter-spacing: 4.5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 13px;
     }
-
-    .modal-label {
-      font-size: 10px;
-      letter-spacing: 4.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 14px;
-    }
-
-    .modal-destination {
+    .modal-dest {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 6vw, 3rem);
-      font-weight: 400;
-      color: var(--dark);
-      line-height: 1.15;
-      margin-bottom: 30px;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 700; color: var(--ink); line-height: 1.14; margin-bottom: 24px;
     }
-
     .modal-rule {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; margin-bottom: 22px;
     }
-
-    .modal-rule::before,
-    .modal-rule::after {
-      content: '';
-      display: block;
-      flex: 1;
-      max-width: 56px;
-      height: 1px;
-      background: var(--gold-light);
+    .modal-rule::before, .modal-rule::after {
+      content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--gold-lt);
     }
-
-    .modal-rule-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--gold);
-    }
-
-    .modal-message {
+    .modal-rule-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+    .modal-msg {
       font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--text);
-      line-height: 1.9;
+      font-size: 1.05rem; font-style: italic; color: var(--ink-2); line-height: 1.9;
     }
 
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      padding: 28px 24px;
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
+    /* ═══════════════════════ MISC ═══════════════════════ */
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+
+    @media (max-width: 860px) {
+      .dest-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 520px) {
+      .dest-grid { grid-template-columns: 1fr; gap: 12px; padding: 20px 16px 64px; }
+      .grid-h1   { font-size: 2.5rem; }
+      .recs-grid { grid-template-columns: 1fr; }
+      .cta-btns  { flex-direction: column; }
+      .btn-primary, .btn-secondary { text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="header-ornament" aria-hidden="true">
-      <span></span>
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
-      </svg>
-      <span></span>
-    </div>
-    <p class="tagline">A little something for you</p>
-    <h1>Where shall <em>we</em> go?</h1>
-    <p class="subtitle">Pick your dream destination and let the adventure begin.</p>
-  </header>
-
-  <main class="grid" id="grid"></main>
-
-  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalDestination">
-    <div class="modal" role="document">
-      <button class="modal-close" id="closeBtn" aria-label="Close">✕</button>
-      <span class="modal-heart" aria-hidden="true">♥</span>
-      <p class="modal-label">You've chosen</p>
-      <h2 class="modal-destination" id="modalDestination"></h2>
-      <div class="modal-rule" aria-hidden="true">
-        <div class="modal-rule-dot"></div>
+  <!-- ── GRID VIEW ── -->
+  <div id="view-grid">
+    <header class="grid-header">
+      <div class="ornament" aria-hidden="true">
+        <span></span>
+        <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+        <span></span>
       </div>
-      <p class="modal-message">Can't wait to explore the world with you ♥</p>
+      <p class="grid-sup">A little something for you</p>
+      <h1 class="grid-h1">Where shall <em>we</em> go?</h1>
+      <p class="grid-sub">Pick your dream and let's make it ours.</p>
+    </header>
+    <div class="dest-grid" id="grid"></div>
+  </div>
+
+  <!-- ── DETAIL VIEW ── -->
+  <div id="view-detail" class="hidden"></div>
+
+  <!-- ── MODAL ── -->
+  <div class="modal-back" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-dest">
+    <div class="modal-box">
+      <button class="modal-x" id="modal-x" aria-label="Close">✕</button>
+      <span class="modal-heart" aria-hidden="true">♥</span>
+      <p class="modal-lbl">You've chosen</p>
+      <h2 class="modal-dest" id="modal-dest"></h2>
+      <div class="modal-rule" aria-hidden="true"><div class="modal-rule-dot"></div></div>
+      <p class="modal-msg">Can't wait to explore the world with you ♥</p>
     </div>
   </div>
 
-  <footer>Made with love ♥</footer>
-
   <script>
-    const destinations = [
-      { name: "Paris",      country: "France",       id: "photo-1502602898657-3e91760cbb34" },
-      { name: "London",     country: "England",      id: "photo-1513635269975-59663e0ac1ad" },
-      { name: "Lake Como",  country: "Italy",        id: "photo-1494522358652-f30e61a60313" },
-      { name: "Madrid",     country: "Spain",        id: "photo-1539037116277-4db20889f2d4" },
-      { name: "Athens",     country: "Greece",       id: "photo-1603565816030-6b389eeb23cb" },
-      { name: "Dolomites",  country: "Italy",        id: "photo-1551698618-1dfe5d97d256" },
-      { name: "Vienna",     country: "Austria",      id: "photo-1516550893923-42d28e5677af" },
-      { name: "Berlin",     country: "Germany",      id: "photo-1560969184-10fe8719e047" },
-      { name: "Amsterdam",  country: "Netherlands",  id: "photo-1534351590666-13e3e96b5017" },
+    const DESTINATIONS = [
+      {
+        name: "Paris", country: "France",
+        photo: "photo-1502602898657-3e91760cbb34",
+        tags: ["WINE", "GOLDEN HOUR", "LINEN"],
+        vibes: "WINE, GOLDEN HOUR, LINEN",
+        tagline: "The obvious one, which turns out to be obvious for a reason.",
+        desc: "Paris is slow mornings, crumbling wine bars, and streets that make you feel like you're in the opening scene of something very good.",
+        whyUs: "Because sometimes the cliché is the cliché because it works. We'll find a terrace, order the carafe, and let Paris do what it always does.",
+        days: [
+          { lbl: "DAY 1 — ARRIVE & WANDER",  txt: "Saint-Germain on foot, a glass at dusk, no plan beyond that." },
+          { lbl: "DAY 2 — THE GOLDEN ROUTE", txt: "Marais for breakfast, museum for an hour, leave before you're full." },
+          { lbl: "DAY 3 — SLOW EXIT",         txt: "Market, bakery, one last café with something we didn't try the first time." },
+        ],
+        recs: [
+          { lbl: "DINNER",       name: "Le Comptoir du Relais",       desc: "candlelight, bistro, no rush" },
+          { lbl: "A DRINK",      name: "Natural wine, Rue de Bretagne", desc: "small glass, warm room" },
+          { lbl: "A WALK",       name: "Seine at dusk",               desc: "hold hands, say nothing" },
+          { lbl: "HOTEL ENERGY", name: "Parquet floors, tall windows", desc: "white linen, Haussmann light" },
+        ],
+        wear: "A silk slip dress, a blazer I don't close, and shoes that are wrong for cobblestones.",
+        cta: "Choose Paris and I'll bring the good silk.",
+      },
+      {
+        name: "London", country: "England",
+        photo: "photo-1513635269975-59663e0ac1ad",
+        tags: ["SPEAKEASY", "RAIN", "CANDLELIGHT"],
+        vibes: "RAIN, VELVET, SPEAKEASY",
+        tagline: "The rainy one, which is secretly the cuddliest.",
+        desc: "London is martinis, wet pavements, velvet booths, and the very convenient romance of weather that says stay closer.",
+        whyUs: "It gives us city energy without demanding sunshine. We can hide in a bar, order something strong, and let rain on the window make the whole thing feel inevitable.",
+        days: [
+          { lbl: "DAY 1 — RAIN CHECK",   txt: "Bermondsey, Borough Market, find a pub before the second drizzle." },
+          { lbl: "DAY 2 — VELVET ROUTE", txt: "Mayfair in the afternoon, a cocktail bar at six, Soho after dark." },
+          { lbl: "DAY 3 — SOFT EXIT",    txt: "Notting Hill market, one very good coffee, leave while we still want to stay." },
+        ],
+        recs: [
+          { lbl: "DINNER",       name: "Soho table, low light",        desc: "good food and better excuses to lean in" },
+          { lbl: "A DRINK",      name: "rainy speakeasy",              desc: "martinis, velvet, candlelight" },
+          { lbl: "A WALK",       name: "Mayfair to Soho in a drizzle", desc: "romance, but with better coats" },
+          { lbl: "HOTEL ENERGY", name: "dark wood, heavy curtains",    desc: "rain makes staying in sound cultured" },
+        ],
+        wear: "A trench, stockings, something black, and lipstick that looks better after a martini.",
+        cta: "Choose London and I'll find the velvet booth.",
+      },
+      {
+        name: "Lake Como", country: "Italy",
+        photo: "photo-1494522358652-f30e61a60313",
+        tags: ["BOAT", "LEMON", "SILENCE"],
+        vibes: "BOAT, LEMON, SILENCE",
+        tagline: "The slow one, where time feels like it belongs entirely to you.",
+        desc: "Lake Como is green water, old villas, and the quiet feeling that nothing urgent has ever happened here — and nothing will.",
+        whyUs: "We need somewhere that asks nothing of us. We'll rent a boat, eat slowly, and come back looking slightly more in love than when we left.",
+        days: [
+          { lbl: "DAY 1 — ARRIVE BY FERRY",   txt: "Varenna at dusk, unpack slowly, find dinner by the water." },
+          { lbl: "DAY 2 — THE LAKE IS YOURS", txt: "Boat hire at nine, swim at noon, a long lunch that becomes dinner." },
+          { lbl: "DAY 3 — VILLAGE HOURS",     txt: "Bellagio on foot, gelato twice, the last ferry back." },
+        ],
+        recs: [
+          { lbl: "DINNER",       name: "Lakeside terrace, Varenna",      desc: "white tablecloth, fish, candles in the wind" },
+          { lbl: "A DRINK",      name: "Campari on the dock",            desc: "it's practically the law here" },
+          { lbl: "A WALK",       name: "Varenna to the castle",          desc: "steep, beautiful, worth every step" },
+          { lbl: "HOTEL ENERGY", name: "Stone floors, shuttered windows", desc: "the sound of water when you wake" },
+        ],
+        wear: "A white linen dress I can swim in, and nothing else I need.",
+        cta: "Choose Como and I'll learn to say 'one more' in Italian.",
+      },
+      {
+        name: "Madrid", country: "Spain",
+        photo: "photo-1539037116277-4db20889f2d4",
+        tags: ["LATE NIGHT", "VERMUT", "HEAT"],
+        vibes: "HEAT, VERMUT, LATE NIGHTS",
+        tagline: "The electric one, where dinner starts at ten and nobody apologises.",
+        desc: "Madrid is hot pavements, dark bars, and the radical idea that a good time doesn't have to end.",
+        whyUs: "For when we want to stay up too late, eat too much, and not feel bad about any of it. Madrid rewards people who say yes.",
+        days: [
+          { lbl: "DAY 1 — ARRIVE AT NIGHT",   txt: "Cava Baja, vermut, pintxos, repeat." },
+          { lbl: "DAY 2 — THE AFTERNOON WAY", txt: "Prado for an hour, siesta like locals, dinner at ten." },
+          { lbl: "DAY 3 — SUN AND LEAVING",   txt: "Rastro market, final café con leche, stay one more hour." },
+        ],
+        recs: [
+          { lbl: "DINNER",       name: "Casa Lucio",               desc: "eggs, heat, a table we won't want to leave" },
+          { lbl: "A DRINK",      name: "Rooftop on Gran Vía",      desc: "the skyline is part of the order" },
+          { lbl: "A WALK",       name: "Malasaña at midnight",     desc: "neon, music, good shoes required" },
+          { lbl: "HOTEL ENERGY", name: "High ceilings, terracotta", desc: "a fan that barely helps and that's fine" },
+        ],
+        wear: "A dress that doesn't wrinkle, red lipstick, and sandals I can walk home in.",
+        cta: "Choose Madrid and we're staying until the last song.",
+      },
+      {
+        name: "Athens", country: "Greece",
+        photo: "photo-1603565816030-6b389eeb23cb",
+        tags: ["MARBLE", "HEAT", "HONEY"],
+        vibes: "MARBLE, HEAT, HONEY",
+        tagline: "The ancient one, which somehow still feels completely alive.",
+        desc: "Athens is rooftop bars with Acropolis views, grilled octopus at noon, and streets that have seen ten thousand years of people falling for each other.",
+        whyUs: "Because old cities make us feel small in the best way. We'll climb somewhere high, eat something simple, and feel like we're in on a secret.",
+        days: [
+          { lbl: "DAY 1 — THE HILL AND THE HEAT",  txt: "Acropolis at opening, cold coffee after, get lost in Monastiraki." },
+          { lbl: "DAY 2 — NEIGHBOURHOOD HOURS",    txt: "Exarchia in the morning, Psyrri for lunch, rooftop for sunset." },
+          { lbl: "DAY 3 — MARKET TO PORT",         txt: "Athens Central Market, the coast, a last glass before the flight." },
+        ],
+        recs: [
+          { lbl: "DINNER",       name: "Psyrri rooftop",           desc: "grilled things, warm air, low music" },
+          { lbl: "A DRINK",      name: "Wine bar in Monastiraki",  desc: "local, natural, very good" },
+          { lbl: "A WALK",       name: "Anafiotika alley",         desc: "hidden, quiet, undeniably beautiful" },
+          { lbl: "HOTEL ENERGY", name: "White walls, rooftop pool", desc: "the Acropolis lit at night" },
+        ],
+        wear: "A linen set, gold jewellery, something that looks effortless and took twenty minutes.",
+        cta: "Choose Athens and I'll find us the rooftop.",
+      },
+      {
+        name: "Dolomites", country: "Italy",
+        photo: "photo-1551698618-1dfe5d97d256",
+        tags: ["ALTITUDE", "PINE", "SILENCE"],
+        vibes: "ALTITUDE, PINE, SILENCE",
+        tagline: "The dramatic one, where the mountains make everything feel cinematic.",
+        desc: "The Dolomites are pale rock, pine forests, and the kind of quiet that makes you realise how much noise you normally live in.",
+        whyUs: "We'll hike enough to feel virtuous, then eat enough to undo it. The views will do most of the work.",
+        days: [
+          { lbl: "DAY 1 — INTO THE VALLEY", txt: "Arrive, breathe mountain air, a walk that isn't too serious." },
+          { lbl: "DAY 2 — THE BIG ONE",     txt: "A proper hike, a rifugio for lunch, back before the light goes." },
+          { lbl: "DAY 3 — SLOW AND LOW",    txt: "Village market, long breakfast, another hike if we're honest with ourselves." },
+        ],
+        recs: [
+          { lbl: "DINNER",       name: "Mountain rifugio",         desc: "polenta, candles, wooden everything" },
+          { lbl: "A DRINK",      name: "Aperol on the terrace",    desc: "the mountains are the garnish" },
+          { lbl: "A WALK",       name: "Tre Cime circuit",         desc: "famous for a reason" },
+          { lbl: "HOTEL ENERGY", name: "Pine walls, wool blankets", desc: "a fireplace we'll actually use" },
+        ],
+        wear: "Good boots, a fleece I pretend is fashion, and something nice for the one dinner.",
+        cta: "Choose the Dolomites and I'll pack the good snacks.",
+      },
+      {
+        name: "Vienna", country: "Austria",
+        photo: "photo-1516550893923-42d28e5677af",
+        tags: ["COFFEE", "WALTZ", "GILT"],
+        vibes: "COFFEE, GILT, PASTRY",
+        tagline: "The grand one, where the architecture is doing a lot and so is the pastry.",
+        desc: "Vienna is marble, Klimt, coffee houses that take themselves seriously, and the constant impression that something magnificent happened here recently.",
+        whyUs: "For when we want to feel cultured without working too hard at it. Vienna makes it easy to look like you know what you're doing.",
+        days: [
+          { lbl: "DAY 1 — THE GOLDEN MILE",      txt: "Kunsthistorisches Museum, the Naschmarkt, coffee and torte until dark." },
+          { lbl: "DAY 2 — SLOW AND CAFFEINATED", txt: "Café Central for breakfast, Belvedere, a long dinner somewhere dark." },
+          { lbl: "DAY 3 — BEFORE THE TRAIN",     txt: "Prater at nine, final coffee, buy the Manner wafers." },
+        ],
+        recs: [
+          { lbl: "DINNER",       name: "Figlmüller, Wollzeile",    desc: "schnitzel, wine, a very specific satisfaction" },
+          { lbl: "A DRINK",      name: "Café Central",             desc: "because some things are worth the cliché" },
+          { lbl: "A WALK",       name: "Ringstrasse at dusk",      desc: "grand, lamplit, genuinely magnificent" },
+          { lbl: "HOTEL ENERGY", name: "High ceilings, brocade",   desc: "a bath they meant seriously" },
+        ],
+        wear: "Something with structure. A good coat. Red lips. Vienna demands you try a little.",
+        cta: "Choose Vienna and I'll find us the best table in the coffee house.",
+      },
+      {
+        name: "Berlin", country: "Germany",
+        photo: "photo-1560969184-10fe8719e047",
+        tags: ["TECHNO", "DARK", "FREE"],
+        vibes: "DARK, FREE, ELECTRIC",
+        tagline: "The unruly one, which doesn't care what time it is and neither will you.",
+        desc: "Berlin is galleries in former power plants, natural wine in candlelit bars, and the best feeling of nobody asking you to be anything in particular.",
+        whyUs: "Because sometimes we want to disappear into a city that doesn't perform. Berlin is itself, loudly, and it's contagious.",
+        days: [
+          { lbl: "DAY 1 — EAST SIDE",       txt: "Mitte galleries, a long afternoon in Prenzlauer Berg, Neukölln for dinner." },
+          { lbl: "DAY 2 — ART AND DARK",    txt: "Hamburger Bahnhof, vintage in Friedrichshain, stay out long." },
+          { lbl: "DAY 3 — MARKET SATURDAY", txt: "Mauerpark, things we didn't need, the longest brunch." },
+        ],
+        recs: [
+          { lbl: "DINNER",       name: "Nobelhart & Schmutzig",         desc: "radical localism, long table, great wine" },
+          { lbl: "A DRINK",      name: "Neukölln bar at midnight",      desc: "no sign outside, always good inside" },
+          { lbl: "A WALK",       name: "East Side Gallery to Treptower", desc: "history, then peace" },
+          { lbl: "HOTEL ENERGY", name: "Exposed concrete, black fittings", desc: "cranes and rooftops at eye level" },
+        ],
+        wear: "Black. More black. One interesting piece I can't explain.",
+        cta: "Choose Berlin and I'll find the bar with no sign.",
+      },
+      {
+        name: "Amsterdam", country: "Netherlands",
+        photo: "photo-1534351590666-13e3e96b5017",
+        tags: ["CANAL", "BIKES", "GOLDEN HOUR"],
+        vibes: "CANAL, GOLDEN HOUR, CHEESE",
+        tagline: "The gentle one, which turns out to be secretly beautiful at every angle.",
+        desc: "Amsterdam is canal reflections, afternoon light, a cheese shop you'll go back to twice, and a city that makes cycling feel like a romantic act.",
+        whyUs: "It's the right size. Small enough to feel like we own it, beautiful enough to reward every wrong turn.",
+        days: [
+          { lbl: "DAY 1 — ARRIVE BY WATER", txt: "Jordaan on foot, canal walk, rijsttafel for dinner." },
+          { lbl: "DAY 2 — MUSEUM MORNING",  txt: "Rijksmuseum for two hours, then the Negen Straatjes, golden hour drinks." },
+          { lbl: "DAY 3 — BEFORE THE TRAIN", txt: "Albert Cuyp market, herring on the street, one last canal sit." },
+        ],
+        recs: [
+          { lbl: "DINNER",       name: "Jordaan candlelit",        desc: "the kind of place with a handwritten menu" },
+          { lbl: "A DRINK",      name: "Brouwerij 't IJ",          desc: "windmill brewery, very Amsterdam, obviously" },
+          { lbl: "A WALK",       name: "Prinsengracht at dusk",    desc: "every direction is a postcard" },
+          { lbl: "HOTEL ENERGY", name: "Canal view, low ceilings", desc: "the sound of bicycles below" },
+        ],
+        wear: "Wide-leg trousers, a good knit, flat shoes for the cobblestones.",
+        cta: "Choose Amsterdam and I'll rent us the bikes.",
+      },
     ];
 
-    const grid  = document.getElementById('grid');
-    const modal = document.getElementById('modal');
-    const dest  = document.getElementById('modalDestination');
-    const closeBtn = document.getElementById('closeBtn');
+    const gridView   = document.getElementById('view-grid');
+    const detailView = document.getElementById('view-detail');
+    const modal      = document.getElementById('modal');
+    const modalDest  = document.getElementById('modal-dest');
+    const modalX     = document.getElementById('modal-x');
+    const gridEl     = document.getElementById('grid');
 
-    destinations.forEach(d => {
+    let savedScroll = 0;
+
+    // Build card grid
+    DESTINATIONS.forEach((d, i) => {
       const card = document.createElement('article');
-      card.className = 'card';
+      card.className = 'dest-card';
       card.setAttribute('role', 'button');
       card.setAttribute('tabindex', '0');
-      card.setAttribute('aria-label', `Choose ${d.name}`);
+      card.setAttribute('aria-label', `Explore ${d.name}`);
       card.innerHTML = `
-        <img
-          src="https://images.unsplash.com/${d.id}?auto=format&fit=crop&w=600&q=80"
-          alt="${d.name}, ${d.country}"
-          loading="lazy"
-        />
-        <div class="card-overlay" aria-hidden="true"></div>
-        <div class="card-content">
-          <p class="card-country">${d.country}</p>
-          <h2 class="card-name">${d.name}</h2>
-          <button class="card-btn" tabindex="-1" aria-hidden="true">Choose</button>
+        <img src="https://images.unsplash.com/${d.photo}?auto=format&fit=crop&w=600&q=80"
+             alt="${d.name}, ${d.country}" loading="lazy"/>
+        <div class="dest-overlay"></div>
+        <div class="dest-info">
+          <p class="dest-country">${d.country}</p>
+          <p class="dest-name">${d.name}</p>
         </div>
       `;
-      card.addEventListener('click', () => pick(d.name));
+      card.addEventListener('click', () => openDetail(d));
       card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(d.name); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(d); }
       });
-      grid.appendChild(card);
+      gridEl.appendChild(card);
     });
 
+    function openDetail(d) {
+      savedScroll = window.scrollY;
+      detailView.innerHTML = buildDetail(d);
+      gridView.classList.add('hidden');
+      detailView.classList.remove('hidden');
+      window.scrollTo(0, 0);
+      document.getElementById('back-btn').addEventListener('click', closeDetail);
+      document.getElementById('choose-btn').addEventListener('click', () => pick(d.name));
+      document.getElementById('keep-btn').addEventListener('click', closeDetail);
+    }
+
+    function closeDetail() {
+      detailView.classList.add('hidden');
+      gridView.classList.remove('hidden');
+      window.scrollTo(0, savedScroll);
+    }
+
+    function buildDetail(d) {
+      return `
+        <button id="back-btn" class="back-btn">← BACK TO ALL VIBES</button>
+
+        <div class="detail-hero">
+          <img src="https://images.unsplash.com/${d.photo}?auto=format&fit=crop&w=1400&q=85" alt="${d.name}"/>
+          <div class="hero-fade"></div>
+        </div>
+
+        <section class="intro-sec">
+          <div class="wrap">
+            <div class="tags">${d.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            <p class="vibe-lbl">${d.vibes}</p>
+            <h1 class="big-heading">${d.tagline}</h1>
+            <p class="detail-desc">${d.desc}</p>
+            <div class="why-box">
+              <p class="why-lbl">WHY THIS FITS US</p>
+              <p class="why-text">${d.whyUs}</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="itin-sec">
+          <div class="wrap">
+            <p class="sec-sup">THREE DAYS, IF YOU ARE BRAVE</p>
+            <h2 class="sec-h2">The little itinerary</h2>
+            ${d.days.map(day => `
+              <div class="day-card">
+                <p class="day-lbl">${day.lbl}</p>
+                <p class="day-text">${day.txt}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <section class="recs-sec">
+          <div class="wrap">
+            <p class="sec-sup">WHERE I'D TAKE US</p>
+            <h2 class="sec-h2">Not a guide. A shortlist<br>with motives.</h2>
+            <div class="recs-grid">
+              ${d.recs.map(r => `
+                <div class="rec-card">
+                  <p class="rec-lbl">${r.lbl}</p>
+                  <p class="rec-name">${r.name}</p>
+                  <p class="rec-desc">${r.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+
+        <section class="wear-sec">
+          <div class="wrap">
+            <p class="sec-sup">WHAT I'D WEAR</p>
+            <p class="wear-text"><em>${d.wear}</em></p>
+          </div>
+        </section>
+
+        <section class="cta-sec">
+          <div class="wrap">
+            <p class="cta-sup">SO, BABY?</p>
+            <h2 class="cta-h">${d.cta}</h2>
+            <div class="cta-btns">
+              <button id="choose-btn" class="btn-primary">CHOOSE THIS</button>
+              <button id="keep-btn" class="btn-secondary">KEEP COMPARING</button>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
     function pick(name) {
-      dest.textContent = name;
+      modalDest.textContent = name;
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
-      closeBtn.focus();
     }
 
     function closeModal() {
@@ -456,7 +664,7 @@
       document.body.style.overflow = '';
     }
 
-    closeBtn.addEventListener('click', closeModal);
+    modalX.addEventListener('click', closeModal);
     modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
