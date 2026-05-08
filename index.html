@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Where Shall We Go? ♥</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:         #FAF8F3;
+      --gold:       #B8935A;
+      --gold-light: #E2C99A;
+      --rose:       #B87A7F;
+      --dark:       #28211C;
+      --text:       #4E453E;
+      --muted:      #9A8E85;
+      --card-bg:    #D8D0C5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      padding: 88px 24px 72px;
+    }
+
+    .header-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .header-ornament span {
+      display: block;
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.7;
+    }
+
+    .header-ornament svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--rose);
+    }
+
+    .tagline {
+      font-size: 10px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--dark);
+      margin-bottom: 22px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      max-width: 340px;
+      margin: 0 auto;
+      line-height: 1.9;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 40px 20px 100px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 520px) {
+      .grid {
+        grid-template-columns: 1fr;
+        padding: 24px 16px 80px;
+        gap: 14px;
+      }
+      h1 { font-size: 2.6rem; }
+    }
+
+    /* ── Cards ── */
+    .card {
+      position: relative;
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 3 / 4;
+      background: var(--card-bg);
+      opacity: 0;
+      animation: fadeUp 0.55s ease forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.10s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.20s; }
+    .card:nth-child(5) { animation-delay: 0.25s; }
+    .card:nth-child(6) { animation-delay: 0.30s; }
+    .card:nth-child(7) { animation-delay: 0.35s; }
+    .card:nth-child(8) { animation-delay: 0.40s; }
+    .card:nth-child(9) { animation-delay: 0.45s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .card:hover img,
+    .card:focus-within img {
+      transform: scale(1.07);
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 35%,
+        rgba(18, 12, 8, 0.74) 100%
+      );
+      transition: background 0.4s ease;
+    }
+
+    .card:hover .card-overlay,
+    .card:focus-within .card-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(18, 12, 8, 0.10) 0%,
+        rgba(18, 12, 8, 0.88) 100%
+      );
+    }
+
+    .card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 26px 22px 24px;
+    }
+
+    .card-country {
+      font-size: 10px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 5px;
+    }
+
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      color: white;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.25s ease, border-color 0.25s ease, opacity 0.3s ease, transform 0.3s ease;
+      font-family: 'Lato', sans-serif;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .card:hover .card-btn,
+    .card:focus-within .card-btn {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.04s;
+    }
+
+    .card-btn:hover,
+    .card-btn:focus {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: white;
+      outline: none;
+    }
+
+    /* ── Modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(22, 16, 12, 0.90);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: var(--bg);
+      max-width: 460px;
+      width: 100%;
+      padding: 60px 44px 56px;
+      text-align: center;
+      position: relative;
+      transform: translateY(28px) scale(0.97);
+      transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+
+    .modal-backdrop.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1;
+      padding: 6px 8px;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover,
+    .modal-close:focus {
+      color: var(--dark);
+      outline: none;
+    }
+
+    .modal-heart {
+      display: block;
+      font-size: 2rem;
+      color: var(--rose);
+      margin-bottom: 22px;
+      animation: heartbeat 1.4s ease infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      28%       { transform: scale(1.18); }
+      55%       { transform: scale(1.06); }
+    }
+
+    .modal-label {
+      font-size: 10px;
+      letter-spacing: 4.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .modal-destination {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3rem);
+      font-weight: 400;
+      color: var(--dark);
+      line-height: 1.15;
+      margin-bottom: 30px;
+    }
+
+    .modal-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .modal-rule::before,
+    .modal-rule::after {
+      content: '';
+      display: block;
+      flex: 1;
+      max-width: 56px;
+      height: 1px;
+      background: var(--gold-light);
+    }
+
+    .modal-rule-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .modal-message {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.9;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 28px 24px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-ornament" aria-hidden="true">
+      <span></span>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
+      </svg>
+      <span></span>
+    </div>
+    <p class="tagline">A little something for you</p>
+    <h1>Where shall <em>we</em> go?</h1>
+    <p class="subtitle">Pick your dream destination and let the adventure begin.</p>
+  </header>
+
+  <main class="grid" id="grid"></main>
+
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalDestination">
+    <div class="modal" role="document">
+      <button class="modal-close" id="closeBtn" aria-label="Close">✕</button>
+      <span class="modal-heart" aria-hidden="true">♥</span>
+      <p class="modal-label">You've chosen</p>
+      <h2 class="modal-destination" id="modalDestination"></h2>
+      <div class="modal-rule" aria-hidden="true">
+        <div class="modal-rule-dot"></div>
+      </div>
+      <p class="modal-message">Can't wait to explore the world with you ♥</p>
+    </div>
+  </div>
+
+  <footer>Made with love ♥</footer>
+
+  <script>
+    const destinations = [
+      { name: "Paris",      country: "France",       id: "photo-1502602898657-3e91760cbb34" },
+      { name: "London",     country: "England",      id: "photo-1513635269975-59663e0ac1ad" },
+      { name: "Lake Como",  country: "Italy",        id: "photo-1494522358652-f30e61a60313" },
+      { name: "Madrid",     country: "Spain",        id: "photo-1539037116277-4db20889f2d4" },
+      { name: "Athens",     country: "Greece",       id: "photo-1603565816030-6b389eeb23cb" },
+      { name: "Dolomites",  country: "Italy",        id: "photo-1551698618-1dfe5d97d256" },
+      { name: "Vienna",     country: "Austria",      id: "photo-1516550893923-42d28e5677af" },
+      { name: "Berlin",     country: "Germany",      id: "photo-1560969184-10fe8719e047" },
+      { name: "Amsterdam",  country: "Netherlands",  id: "photo-1534351590666-13e3e96b5017" },
+    ];
+
+    const grid  = document.getElementById('grid');
+    const modal = document.getElementById('modal');
+    const dest  = document.getElementById('modalDestination');
+    const closeBtn = document.getElementById('closeBtn');
+
+    destinations.forEach(d => {
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `Choose ${d.name}`);
+      card.innerHTML = `
+        <img
+          src="https://images.unsplash.com/${d.id}?auto=format&fit=crop&w=600&q=80"
+          alt="${d.name}, ${d.country}"
+          loading="lazy"
+        />
+        <div class="card-overlay" aria-hidden="true"></div>
+        <div class="card-content">
+          <p class="card-country">${d.country}</p>
+          <h2 class="card-name">${d.name}</h2>
+          <button class="card-btn" tabindex="-1" aria-hidden="true">Choose</button>
+        </div>
+      `;
+      card.addEventListener('click', () => pick(d.name));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(d.name); }
+      });
+      grid.appendChild(card);
+    });
+
+    function pick(name) {
+      dest.textContent = name;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+</body>
+</html>
